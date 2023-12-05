@@ -1,0 +1,62 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'kotlin-android'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    namespace 'com.example.barcodescanner'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.barcodescanner"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+}
+
+dependencies {
+
+    implementation project(':common:commonUtils')
+
+    implementation Deps.core
+    implementation Deps.appComp
+    implementation Deps.material
+    implementation Deps.constraintlayout
+    testImplementation ImpTest.junit
+    androidTestImplementation AndroidTestImp.androidJunit
+    androidTestImplementation AndroidTestImp.espresso
+    kapt Deps.kotlinxMetaData_
+
+    //barcode scanner
+    implementation BarcodeLib.quickieQRLib
+
+    //hilt
+    implementation Hilt.impHilt
+    kapt Hilt.kaptHilt
+    kapt Hilt.kaptAndroidHilt
+}
